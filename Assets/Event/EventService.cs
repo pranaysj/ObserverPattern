@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EventService
 {
-    private EventService instance;
-    public EventService Instance
+    private static EventService instance;
+    public static EventService Instance
     {
         get
         {
