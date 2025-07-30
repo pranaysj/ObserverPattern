@@ -13,6 +13,21 @@ public class PlayerSanity : MonoBehaviour
         maxSanity = sanityLevel;
         playerController = GameService.Instance.GetPlayerController();
     }
+
+    private void OnEnable()
+    {
+        EventService.Instance.OnPotionDrinkEvent.AddListener(onDrankPotion);
+        EventService.Instance.OnRatRushEvent.AddListener(onSupernaturalEvent);
+        EventService.Instance.OnSkullDropEvent.AddListener(onSupernaturalEvent);
+    }
+
+    private void OnDisable()
+    {
+        EventService.Instance.OnPotionDrinkEvent.RemoveListener(onDrankPotion);
+        EventService.Instance.OnRatRushEvent.RemoveListener(onSupernaturalEvent);
+        EventService.Instance.OnSkullDropEvent.RemoveListener(onSupernaturalEvent);
+    }
+
     void Update()
     {
         if (playerController.PlayerState == PlayerState.Dead)
@@ -20,7 +35,7 @@ public class PlayerSanity : MonoBehaviour
 
         float sanityDrop = updateSanity();
 
-        increaseSanity(sanityDrop);
+        decreaseSanity(sanityDrop);
     }
 
     private float updateSanity()
@@ -33,7 +48,7 @@ public class PlayerSanity : MonoBehaviour
         return sanityDrop;
     }
 
-    private void increaseSanity(float amountToDecrease)
+    private void decreaseSanity(float amountToDecrease)
     {
         Mathf.Floor(sanityLevel -= amountToDecrease);
         if (sanityLevel <= 0)
@@ -44,7 +59,7 @@ public class PlayerSanity : MonoBehaviour
         GameService.Instance.GetGameUI().UpdateInsanity(1f - sanityLevel / maxSanity);
     }
 
-    private void decreaseSanity(float amountToIncrease)
+    private void increaseSanity(float amountToIncrease)
     {
         Mathf.Floor(sanityLevel += amountToIncrease);
         if (sanityLevel > 100)
@@ -53,13 +68,13 @@ public class PlayerSanity : MonoBehaviour
         }
         GameService.Instance.GetGameUI().UpdateInsanity(1f - sanityLevel / maxSanity);
     }
-    private void OnSupernaturalEvent()
+    private void onSupernaturalEvent()
     {
-        increaseSanity(sanityDropAmountPerEvent);
+        decreaseSanity(sanityDropAmountPerEvent);
     }
 
-    private void OnDrankPotion(int potionEffect)
+    private void onDrankPotion(int potionEffect)
     {
-        decreaseSanity(potionEffect);
+        increaseSanity(potionEffect);
     }
 }
