@@ -27,7 +27,7 @@ public class EventService
         OnLightSwitchToggled = new EventController();
         OnKeyPickedUp = new EventController<int>();
         OnLightsOffByGhostEvent = new EventController();
-        OnRatRush = new EventController();
+        OnRatRush = new EventController();      
 
         PlayerEscapedEvent = new EventController();
         PlayerDeathEvent = new EventController();

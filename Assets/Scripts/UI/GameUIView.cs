@@ -30,7 +30,7 @@ public class GameUIView : MonoBehaviour
 
         tryAgainButton.onClick.AddListener(OnTryAgainButtonClicked);
         quitButton.onClick.AddListener(OnQuitButtonClicked);
-    }
+    }   
 
     private void OnDisable()
     {
